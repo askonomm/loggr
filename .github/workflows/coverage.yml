@@ -21,7 +21,8 @@ jobs:
       - name: Set up logs dir
         run: |
           mkdir logs/
-          chmod -R 0777 logs/
+          chmod -R a+rw logs/
+          ls -la
 
       - name: Run tests and collect coverage
         run: ./vendor/bin/phpunit tests --coverage-clover coverage.xml tests
