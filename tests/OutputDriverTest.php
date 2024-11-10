@@ -1,10 +1,7 @@
 <?php
 
-namespace Asko\Loggr\Tests\Drivers;
-
 use Asko\Loggr\Drivers\OutputDriver;
 use Asko\Loggr\Loggr;
-use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class OutputDriverTest extends TestCase

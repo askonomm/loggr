@@ -8,11 +8,6 @@
             "Asko\\Loggr\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Asko\\Loggr\\Tests\\": "tests/"
-        }
-    },
     "authors": [
         {
             "name": "Asko Nomm",
@@ -20,7 +15,7 @@
         }
     ],
     "require": {
-        "php": "^8.3"
+        "php": ">=8.3"
     },
     "require-dev": {
         "phpunit/phpunit": "11"
