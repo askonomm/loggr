@@ -6,10 +6,7 @@
     "autoload": {
         "psr-4": {
             "Asko\\Loggr\\": "src/"
-        },
-        "classmap": [
-            "src/"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
