@@ -1,5 +1,7 @@
 <?php
 
+namespace Asko\Loggr\Tests;
+
 use Asko\Loggr\Drivers\OutputDriver;
 use Asko\Loggr\Loggr;
 use PHPUnit\Framework\TestCase;

@@ -1,5 +1,8 @@
 <?php
 
+namespace Asko\Loggr\Tests;
+
+use DateTime;
 use Asko\Loggr\Drivers\FileSystemDriver;
 use Asko\Loggr\Loggr;
 use PHPUnit\Framework\TestCase;
