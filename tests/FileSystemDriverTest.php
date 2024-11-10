@@ -15,9 +15,9 @@ class FileSystemDriverTest extends TestCase
     public function testEmergency(): void
     {
         $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/logs'));
+        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
         $loggr->emergency('test');
-        $lines = file(__DIR__ . '/logs/' . $date->format('Y-m-d') . '.log');
+        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
         $last_line = end($lines);
         $full_date = $date->format('Y-m-d H:i:s');
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.EMERGENCY: test", $last_line);
@@ -29,9 +29,9 @@ class FileSystemDriverTest extends TestCase
     public function testAlert(): void
     {
         $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/logs'));
+        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
         $loggr->alert('test');
-        $lines = file(__DIR__ . '/logs/' . $date->format('Y-m-d') . '.log');
+        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
         $last_line = end($lines);
         $full_date = $date->format('Y-m-d H:i:s');
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.ALERT: test", $last_line);
@@ -43,9 +43,9 @@ class FileSystemDriverTest extends TestCase
     public function testCritical(): void
     {
         $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/logs'));
+        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
         $loggr->critical('test');
-        $lines = file(__DIR__ . '/logs/' . $date->format('Y-m-d') . '.log');
+        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
         $last_line = end($lines);
         $full_date = $date->format('Y-m-d H:i:s');
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.CRITICAL: test", $last_line);
@@ -57,9 +57,9 @@ class FileSystemDriverTest extends TestCase
     public function testError(): void
     {
         $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/logs'));
+        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
         $loggr->error('test');
-        $lines = file(__DIR__ . '/logs/' . $date->format('Y-m-d') . '.log');
+        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
         $last_line = end($lines);
         $full_date = $date->format('Y-m-d H:i:s');
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.ERROR: test", $last_line);
@@ -71,9 +71,9 @@ class FileSystemDriverTest extends TestCase
     public function testWarning(): void
     {
         $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/logs'));
+        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
         $loggr->warning('test');
-        $lines = file(__DIR__ . '/logs/' . $date->format('Y-m-d') . '.log');
+        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
         $last_line = end($lines);
         $full_date = $date->format('Y-m-d H:i:s');
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.WARNING: test", $last_line);
@@ -85,9 +85,9 @@ class FileSystemDriverTest extends TestCase
     public function testNotice(): void
     {
         $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/logs'));
+        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
         $loggr->notice('test');
-        $lines = file(__DIR__ . '/logs/' . $date->format('Y-m-d') . '.log');
+        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
         $last_line = end($lines);
         $full_date = $date->format('Y-m-d H:i:s');
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.NOTICE: test", $last_line);
@@ -99,9 +99,9 @@ class FileSystemDriverTest extends TestCase
     public function testInfo(): void
     {
         $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/logs'));
+        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
         $loggr->info('test');
-        $lines = file(__DIR__ . '/logs/' . $date->format('Y-m-d') . '.log');
+        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
         $last_line = end($lines);
         $full_date = $date->format('Y-m-d H:i:s');
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.INFO: test", $last_line);
@@ -113,9 +113,9 @@ class FileSystemDriverTest extends TestCase
     public function testDebug(): void
     {
         $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/logs'));
+        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
         $loggr->debug('test');
-        $lines = file(__DIR__ . '/logs/' . $date->format('Y-m-d') . '.log');
+        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
         $last_line = end($lines);
         $full_date = $date->format('Y-m-d H:i:s');
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.DEBUG: test", $last_line);
@@ -127,7 +127,7 @@ class FileSystemDriverTest extends TestCase
     public function testMultipleEntries(): void
     {
         $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/logs'));
+        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
         $loggr->emergency('test');
         $loggr->alert('test');
         $loggr->critical('test');
@@ -137,7 +137,7 @@ class FileSystemDriverTest extends TestCase
         $loggr->info('test');
         $loggr->debug('test');
 
-        $lines = file(__DIR__ . '/logs/' . $date->format('Y-m-d') . '.log');
+        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
         $this->assertCount(8, $lines);
 
         $first_line = $lines[0];
@@ -149,7 +149,7 @@ class FileSystemDriverTest extends TestCase
 
     public function tearDown(): void
     {
-        array_map('unlink', glob(__DIR__ . '/logs/*'));
-        rmdir(__DIR__ . '/logs');
+        array_map('unlink', glob(__DIR__ . '/../logs/*'));
+        rmdir(__DIR__ . '/../logs');
     }
 }
