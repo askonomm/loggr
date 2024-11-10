@@ -36,12 +36,12 @@ readonly class FileSystemDriver implements Driver
 
         // If the log file does not exist, try creating one
         if (!file_exists($path) && !touch($path)) {
-            throw new \RuntimeException('Log file could not be created');
+            throw new \RuntimeException('Log file could not be created at path: ' . $path);
         }
 
         // We managed to get this far, but still can't write to the log file
         if (!is_writeable($path)) {
-            throw new \RuntimeException('Log file is not writeable');
+            throw new \RuntimeException('Log file is not writeable at path: ' . $path);
         }
 
         file_put_contents(
