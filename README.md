@@ -1,5 +1,7 @@
 # Loggr
 
+[![codecov](https://codecov.io/gh/askonomm/loggr/graph/badge.svg?token=lQDNAnAWKn)](https://codecov.io/gh/askonomm/loggr)
+
 An extendable logging utility class brought to you by the frustration of every logging class always having its own unique format, 
 which makes using log viewing tools difficult. Instead of having its own yet-another-format that no tool supports, Loggr attempts to match 
 many already existing formats, allowing you to use whichever you prefer most.
