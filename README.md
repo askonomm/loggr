@@ -70,5 +70,5 @@ responsible for making sure that the serialized log entry would end up in the ri
 
 ### Built-in drivers
 
-- [FileSystemDriver](#)
-- [StdoutDriver](#)
+- [FileSystemDriver](https://github.com/askonomm/loggr/blob/main/src/Drivers/FileSystemDriver.php)
+- [OutputDriver](https://github.com/askonomm/loggr/blob/main/src/Drivers/OutputDriver.php)
