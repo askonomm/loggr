@@ -15,6 +15,15 @@ class Loggr
 {
     private array $trace;
 
+    /**
+     * Since it would suck if a logging utility throws an exception,
+     * Loggr instead of throwing will simply set the error here, in case
+     * logging doesn't work, and you might want to find out why.
+     *
+     * @var string|null $error
+     */
+    public ?string $error = null;
+
     public function __construct(
         public ?Driver $driver = null,
         public ?Format $format = Format::Laravel,
@@ -26,16 +35,12 @@ class Loggr
      * @param Level $level The severity level of the log message. Defaults to Level::Info.
      * @param mixed $context Additional data or context to include with the log message. Optional.
      * @return void
-     * @throws \Exception
      */
     private function log(Level $level = Level::Info, mixed $context = null): void
     {
-        if (!$this->driver) {
-            throw new \Exception("No driver has been set.");
-        }
-
-        if (!$this->format) {
-            throw new \Exception("No format has been set.");
+        if (!$this->driver || !$this->format) {
+            $this->error = "Driver or format not set.";
+            return;
         }
 
         $this->driver->log($this->format->serialize(new Message(
@@ -50,7 +55,6 @@ class Loggr
      *
      * @param mixed $context Additional data or context to include with the emergency message. Optional.
      * @return void
-     * @throws \Exception
      */
     public function emergency(mixed $context = null): void
     {
@@ -63,7 +67,6 @@ class Loggr
      *
      * @param mixed $context Additional data or context to include with the log message. Optional.
      * @return void
-     * @throws \Exception
      */
     public function alert(mixed $context = null): void
     {
@@ -76,7 +79,6 @@ class Loggr
      *
      * @param mixed $context Additional data or context to include with the log message. Optional.
      * @return void
-     * @throws \Exception
      */
     public function critical( mixed $context = null): void
     {
@@ -89,7 +91,6 @@ class Loggr
      *
      * @param mixed $context Additional data or context to include with the error message. Optional.
      * @return void
-     * @throws \Exception
      */
     public function error(mixed $context = null): void
     {
@@ -102,7 +103,6 @@ class Loggr
      *
      * @param mixed $context Optional context information to include in the log.
      * @return void
-     * @throws \Exception
      */
     public function warning(mixed $context = null): void
     {
@@ -115,7 +115,6 @@ class Loggr
      *
      * @param mixed $context Optional context information to include in the log.
      * @return void
-     * @throws \Exception
      */
     public function notice(mixed $context = null): void
     {
@@ -128,7 +127,6 @@ class Loggr
      *
      * @param mixed $context Optional context information to include in the log.
      * @return void
-     * @throws \Exception
      */
     public function info(mixed $context = null): void
     {
@@ -141,7 +139,6 @@ class Loggr
      *
      * @param mixed $context Optional context information to include in the log.
      * @return void
-     * @throws \Exception
      */
     public function debug(mixed $context = null): void
     {

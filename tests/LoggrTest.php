@@ -13,9 +13,9 @@ class LoggrTest extends TestCase
      */
     public function testNoDriver(): void
     {
-        $this->expectExceptionMessage('No driver has been set.');
         $loggr = new Loggr();
         $loggr->info('test');
+        $this->assertEquals("Driver or format not set.", $loggr->error);
     }
 
     /**
@@ -23,9 +23,9 @@ class LoggrTest extends TestCase
      */
     public function testNoFormat(): void
     {
-        $this->expectExceptionMessage('No format has been set.');
         $loggr = new Loggr(new OutputDriver());
         $loggr->format = null;
         $loggr->info('test');
+        $this->assertEquals("Driver or format not set.", $loggr->error);
     }
 }

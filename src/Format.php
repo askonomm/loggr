@@ -20,13 +20,13 @@ enum Format
      * @param Message $message The message to be serialized.
      * @return string The serialized message.
      */
-    public function serialize(Message $message): string
+    public function serialize(Message $message, ?DateTime $dateTime = new DateTime): string
     {
         return match($this) {
-            self::JSON => $this->serializeJson($message),
-            self::IntelliJ => $this->serializeIntelliJ($message),
-            self::Laravel => $this->serializeLaravel($message),
-            self::Symfony => $this->serializeSymfony($message),
+            self::JSON => $this->serializeJson($message, $dateTime),
+            self::IntelliJ => $this->serializeIntelliJ($message, $dateTime),
+            self::Laravel => $this->serializeLaravel($message, $dateTime),
+            self::Symfony => $this->serializeSymfony($message, $dateTime),
         };
     }
 
@@ -36,14 +36,14 @@ enum Format
      * @param Message $message The message to be serialized.
      * @return string The JSON-encoded message.
      */
-    private function serializeJson(Message $message): string
+    private function serializeJson(Message $message, DateTime $dateTime): string
     {
         return json_encode([
-            'date' => (new DateTime)->format('Y-m-d H:i:s'),
+            'date' => $dateTime->format('Y-m-d H:i:s'),
             'level' => $message->level->value,
             'context' => $message->context,
             'trace' => [
-                'file' => $message->trace['file'],
+                'file' => pathinfo($message->trace['file'], PATHINFO_FILENAME),
                 'line' => $message->trace['line'],
             ],
         ]);
@@ -55,10 +55,10 @@ enum Format
      * @param Message $message The message to be serialized.
      * @return string The serialized message.
      */
-    private function serializeLaravel(Message $message): string
+    private function serializeLaravel(Message $message, DateTime $dateTime): string
     {
         // Date
-        $date = (new DateTime)->format('Y-m-d H:i:s');
+        $date = $dateTime->format('Y-m-d H:i:s');
         $line = "[$date] ";
 
         // File name and level
@@ -81,10 +81,10 @@ enum Format
      * @param Message $message The message object that contains log details.
      * @return string The formatted log string.
      */
-    private function serializeSymfony(Message $message): string
+    private function serializeSymfony(Message $message, DateTime $dateTime): string
     {
         // Date
-        $date = (new DateTime)->format('Y-m-d\TH:i:s.uP');
+        $date = $dateTime->format('Y-m-d\TH:i:s.uP');
         $line = "[$date] ";
 
         // File name and level
@@ -107,10 +107,10 @@ enum Format
      * @param Message $message The message object that contains log details.
      * @return string The formatted log string.
      */
-    private function serializeIntelliJ(Message $message): string
+    private function serializeIntelliJ(Message $message, DateTime $dateTime): string
     {
         // Date
-        $date = (new DateTime)->format('Y-m-d H:i:s');
+        $date = $dateTime->format('Y-m-d H:i:s');
         $line = "{$date} ";
 
         // Line number
