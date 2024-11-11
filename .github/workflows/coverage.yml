@@ -18,11 +18,6 @@ jobs:
       - name: Set-up Composer
         uses: php-actions/composer@v6
 
-      - name: Set up logs dir
-        run: |
-          mkdir -p logs/
-          chmod -R u+rw logs/
-
       - name: Run tests and collect coverage
         run: ./vendor/bin/phpunit tests --coverage-clover coverage.xml tests
 

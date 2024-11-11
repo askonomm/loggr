@@ -8,10 +8,10 @@ use DateTime;
 /**
  * @author Asko Nõmm <asko@faultd.com>
  */
-readonly class FileSystemDriver implements Driver
+class FileSystemDriver implements Driver
 {
     public function __construct(
-        private string $directory,
+        private readonly string $directory,
     ) {}
 
     /**
@@ -35,18 +35,33 @@ readonly class FileSystemDriver implements Driver
         $path = $this->directory . DIRECTORY_SEPARATOR . $file_name;
 
         // If the log file does not exist, try creating one
-        if (!file_exists($path) && !touch($path)) {
+        if (!$this->exists($path)) {
             throw new \RuntimeException('Log file could not be created at path: ' . $path);
         }
 
         // We managed to get this far, but still can't write to the log file
-        if (!is_writeable($path)) {
+        if (!$this->isWriteable($path)) {
             throw new \RuntimeException('Log file is not writeable at path: ' . $path);
         }
 
+        $this->write($path, $serializedMessage . PHP_EOL);
+    }
+
+    public function exists(string $path): bool
+    {
+        return file_exists($path);
+    }
+
+    public function isWriteable(string $path): bool
+    {
+        return is_writeable($path);
+    }
+
+    public function write(string $path, string $data): void
+    {
         file_put_contents(
             filename: $path,
-            data: $serializedMessage . PHP_EOL,
+            data: $data,
             flags: FILE_APPEND
         );
     }

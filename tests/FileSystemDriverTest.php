@@ -5,22 +5,21 @@ namespace Asko\Loggr\Tests;
 use DateTime;
 use Asko\Loggr\Drivers\FileSystemDriver;
 use Asko\Loggr\Loggr;
-use PHPUnit\Framework\TestCase;
+use Mockery;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-class FileSystemDriverTest extends TestCase
+class FileSystemDriverTest extends MockeryTestCase
 {
     /**
      * @throws \Exception
      */
     public function testEmergency(): void
     {
-        $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
+        $data = '';
+        $loggr = $this->mockLogger($data);
         $loggr->emergency('test');
-        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
-        $last_line = end($lines);
-        $full_date = $date->format('Y-m-d H:i:s');
-        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.EMERGENCY: test", $last_line);
+        $full_date = (new DateTime)->format('Y-m-d H:i:s');
+        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.EMERGENCY: test", $data);
     }
 
     /**
@@ -28,13 +27,11 @@ class FileSystemDriverTest extends TestCase
      */
     public function testAlert(): void
     {
-        $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
+        $data = '';
+        $loggr = $this->mockLogger($data);
         $loggr->alert('test');
-        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
-        $last_line = end($lines);
-        $full_date = $date->format('Y-m-d H:i:s');
-        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.ALERT: test", $last_line);
+        $full_date = (new DateTime)->format('Y-m-d H:i:s');
+        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.ALERT: test", $data);
     }
 
     /**
@@ -42,13 +39,11 @@ class FileSystemDriverTest extends TestCase
      */
     public function testCritical(): void
     {
-        $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
+        $data = '';
+        $loggr = $this->mockLogger($data);
         $loggr->critical('test');
-        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
-        $last_line = end($lines);
-        $full_date = $date->format('Y-m-d H:i:s');
-        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.CRITICAL: test", $last_line);
+        $full_date = (new DateTime)->format('Y-m-d H:i:s');
+        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.CRITICAL: test", $data);
     }
 
     /**
@@ -56,13 +51,11 @@ class FileSystemDriverTest extends TestCase
      */
     public function testError(): void
     {
-        $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
+        $data = '';
+        $loggr = $this->mockLogger($data);
         $loggr->error('test');
-        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
-        $last_line = end($lines);
-        $full_date = $date->format('Y-m-d H:i:s');
-        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.ERROR: test", $last_line);
+        $full_date = (new DateTime)->format('Y-m-d H:i:s');
+        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.ERROR: test", $data);
     }
 
     /**
@@ -70,13 +63,11 @@ class FileSystemDriverTest extends TestCase
      */
     public function testWarning(): void
     {
-        $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
+        $data = '';
+        $loggr = $this->mockLogger($data);
         $loggr->warning('test');
-        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
-        $last_line = end($lines);
-        $full_date = $date->format('Y-m-d H:i:s');
-        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.WARNING: test", $last_line);
+        $full_date = (new DateTime)->format('Y-m-d H:i:s');
+        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.WARNING: test", $data);
     }
 
     /**
@@ -84,13 +75,11 @@ class FileSystemDriverTest extends TestCase
      */
     public function testNotice(): void
     {
-        $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
+        $data = '';
+        $loggr = $this->mockLogger($data);
         $loggr->notice('test');
-        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
-        $last_line = end($lines);
-        $full_date = $date->format('Y-m-d H:i:s');
-        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.NOTICE: test", $last_line);
+        $full_date = (new DateTime)->format('Y-m-d H:i:s');
+        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.NOTICE: test", $data);
     }
 
     /**
@@ -98,13 +87,11 @@ class FileSystemDriverTest extends TestCase
      */
     public function testInfo(): void
     {
-        $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
+        $data = '';
+        $loggr = $this->mockLogger($data);
         $loggr->info('test');
-        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
-        $last_line = end($lines);
-        $full_date = $date->format('Y-m-d H:i:s');
-        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.INFO: test", $last_line);
+        $full_date = (new DateTime)->format('Y-m-d H:i:s');
+        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.INFO: test", $data);
     }
 
     /**
@@ -112,13 +99,11 @@ class FileSystemDriverTest extends TestCase
      */
     public function testDebug(): void
     {
-        $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
+        $data = '';
+        $loggr = $this->mockLogger($data);
         $loggr->debug('test');
-        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
-        $last_line = end($lines);
-        $full_date = $date->format('Y-m-d H:i:s');
-        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.DEBUG: test", $last_line);
+        $full_date = (new DateTime)->format('Y-m-d H:i:s');
+        $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.DEBUG: test", $data);
     }
 
     /**
@@ -126,30 +111,44 @@ class FileSystemDriverTest extends TestCase
      */
     public function testMultipleEntries(): void
     {
-        $date = new DateTime();
-        $loggr = new Loggr(new FileSystemDriver(__DIR__ . '/../logs'));
-        $loggr->emergency('test');
-        $loggr->alert('test');
-        $loggr->critical('test');
-        $loggr->error('test');
-        $loggr->warning('test');
-        $loggr->notice('test');
-        $loggr->info('test');
-        $loggr->debug('test');
+        $data = '';
+        $loggr = $this->mockLogger($data);
+        $loggr->emergency('test1');
+        $loggr->alert('test2');
+        $loggr->critical('test3');
+        $loggr->error('test4');
+        $loggr->warning('test5');
+        $loggr->notice('test6');
+        $loggr->info('test7');
+        $loggr->debug('test8');
 
-        $lines = file(__DIR__ . '/../logs/' . $date->format('Y-m-d') . '.log');
+        $lines = array_filter(explode("\r\n", $data), fn($line) => !empty($line));
         $this->assertCount(8, $lines);
 
         $first_line = $lines[0];
         $last_line = end($lines);
-        $full_date = $date->format('Y-m-d H:i:s');
+        $full_date = (new DateTime())->format('Y-m-d H:i:s');
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.EMERGENCY: test", $first_line);
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.DEBUG: test", $last_line);
     }
 
-    public function tearDown(): void
+    private function mockLogger(string &$result): Loggr
     {
-        array_map('unlink', glob(__DIR__ . '/../logs/*'));
-        rmdir(__DIR__ . '/../logs');
+        $driver = Mockery::mock(FileSystemDriver::class, [''])->makePartial();
+        $driver->shouldReceive('log')->passthru();
+        $driver->shouldReceive('exists')->andReturn(true);
+        $driver->shouldReceive('isWriteable')->andReturns(true);
+        $driver->shouldReceive('write')->withArgs(function ($path, $data) use (&$result) {
+            $result .= $data;
+
+            return true;
+        });
+
+        return new Loggr($driver);
+    }
+
+    protected function tearDown(): void
+    {
+        Mockery::close();
     }
 }
