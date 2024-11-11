@@ -25,11 +25,6 @@ class FileSystemDriver implements Driver
      */
     public function log(string $serializedMessage): void
     {
-        // If there's no parent directory, try creating one
-        if (!is_dir($this->directory)) {
-            mkdir($this->directory, 0600, true);
-        }
-
         $date = new DateTime();
         $file_name = "{$date->format('Y-m-d')}.log";
         $path = $this->directory . DIRECTORY_SEPARATOR . $file_name;

@@ -122,7 +122,7 @@ class FileSystemDriverTest extends MockeryTestCase
         $loggr->info('test7');
         $loggr->debug('test8');
 
-        $lines = array_filter(explode("\r\n", $data), fn($line) => !empty($line));
+        $lines = array_filter(explode("\n", $data), fn($line) => !empty($line));
         $this->assertCount(8, $lines);
 
         $first_line = $lines[0];
