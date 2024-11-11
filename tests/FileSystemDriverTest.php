@@ -132,6 +132,15 @@ class FileSystemDriverTest extends MockeryTestCase
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.DEBUG: test", $last_line);
     }
 
+    public function testFileSystemDriverThrows(): void
+    {
+        $loggr = new Loggr(new FileSystemDriver('path-does-not-exist'));
+        $loggr->emergency('test');
+        $sep = DIRECTORY_SEPARATOR;
+        $date = (new DateTime())->format('Y-m-d');
+        $this->assertEquals("Log file could not be created at path: path-does-not-exist{$sep}{$date}.log", $loggr->error);
+    }
+
     private function mockLogger(string &$result): Loggr
     {
         $driver = Mockery::mock(FileSystemDriver::class, [''])->makePartial();
