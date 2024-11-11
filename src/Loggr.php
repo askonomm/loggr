@@ -43,11 +43,15 @@ class Loggr
             return;
         }
 
-        $this->driver->log($this->format->serialize(new Message(
-            level: $level,
-            trace: $this->trace,
-            context: $context,
-        )));
+        try {
+            $this->driver->log($this->format->serialize(new Message(
+                level: $level,
+                trace: $this->trace,
+                context: $context,
+            )));
+        } catch(\Throwable $e) {
+            $this->error = $e->getMessage();
+        }
     }
 
     /**
