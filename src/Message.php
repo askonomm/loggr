@@ -9,6 +9,7 @@ readonly class Message
 {
     public function __construct(
         public Level $level,
+        /** @var array<string, mixed> $trace */
         public array $trace = [],
         public mixed $context = null,
     ) {}

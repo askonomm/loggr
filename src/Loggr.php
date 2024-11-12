@@ -13,6 +13,7 @@ namespace Asko\Loggr;
  */
 class Loggr
 {
+    /** @var array<string, mixed> $trace */
     private array $trace;
 
     /**

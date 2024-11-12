@@ -126,7 +126,7 @@ class FileSystemDriverTest extends MockeryTestCase
         $this->assertCount(8, $lines);
 
         $first_line = $lines[0];
-        $last_line = end($lines);
+        $last_line = $lines[count($lines) - 1];
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.EMERGENCY: test", $first_line);
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.DEBUG: test", $last_line);
@@ -161,7 +161,7 @@ class FileSystemDriverTest extends MockeryTestCase
         $driver->shouldReceive('log')->passthru();
         $driver->shouldReceive('exists')->andReturn(true);
         $driver->shouldReceive('isWriteable')->andReturns(true);
-        $driver->shouldReceive('write')->withArgs(function ($path, $data) use (&$result) {
+        $driver->shouldReceive('write')->withArgs(function (string $path, string $data) use (&$result) {
             $result .= $data;
 
             return true;

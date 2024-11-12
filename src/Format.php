@@ -20,7 +20,7 @@ enum Format
      * @param Message $message The message to be serialized.
      * @return string The serialized message.
      */
-    public function serialize(Message $message, ?DateTime $dateTime = new DateTime): string
+    public function serialize(Message $message, DateTime $dateTime = new DateTime): string
     {
         return match($this) {
             self::JSON => $this->serializeJson($message, $dateTime),
@@ -38,15 +38,26 @@ enum Format
      */
     private function serializeJson(Message $message, DateTime $dateTime): string
     {
-        return json_encode([
+        /** @var string $trace_file */
+        $trace_file = $message->trace['file'];
+        /** @var string $trace_line */
+        $trace_line = $message->trace['line'];
+
+        $json = json_encode([
             'date' => $dateTime->format('Y-m-d H:i:s'),
             'level' => $message->level->value,
             'context' => $message->context,
             'trace' => [
-                'file' => pathinfo($message->trace['file'], PATHINFO_FILENAME),
-                'line' => $message->trace['line'],
+                'file' => pathinfo($trace_file, PATHINFO_FILENAME),
+                'line' => $trace_line,
             ],
         ]);
+
+        if ($json === false) {
+            return '';
+        }
+
+        return $json;
     }
 
     /**
@@ -57,18 +68,23 @@ enum Format
      */
     private function serializeLaravel(Message $message, DateTime $dateTime): string
     {
+        /** @var string $trace_file */
+        $trace_file = $message->trace['file'];
+
         // Date
         $date = $dateTime->format('Y-m-d H:i:s');
         $line = "[$date] ";
 
         // File name and level
-        $filename = pathinfo($message->trace['file'], PATHINFO_FILENAME);
+        $filename = pathinfo($trace_file, PATHINFO_FILENAME);
         $line .= "{$filename}.{$message->level->value}: ";
 
         // Context
         if (is_array($message->context) || is_object($message->context)) {
             $line .= json_encode($message->context);
-        } else {
+        }
+
+        if (is_string($message->context) || is_numeric($message->context)) {
             $line .= $message->context;
         }
 
@@ -83,18 +99,23 @@ enum Format
      */
     private function serializeSymfony(Message $message, DateTime $dateTime): string
     {
+        /** @var string $trace_file */
+        $trace_file = $message->trace['file'];
+
         // Date
         $date = $dateTime->format('Y-m-d\TH:i:s.uP');
         $line = "[$date] ";
 
         // File name and level
-        $filename = pathinfo($message->trace['file'], PATHINFO_FILENAME);
+        $filename = pathinfo($trace_file, PATHINFO_FILENAME);
         $line .= "{$filename}.{$message->level->value}: ";
 
         // Context
         if (is_array($message->context) || is_object($message->context)) {
             $line .= json_encode($message->context);
-        } else {
+        }
+
+        if (is_string($message->context) || is_numeric($message->context)) {
             $line .= $message->context;
         }
 
@@ -109,24 +130,31 @@ enum Format
      */
     private function serializeIntelliJ(Message $message, DateTime $dateTime): string
     {
+        /** @var string $trace_file */
+        $trace_file = $message->trace['file'];
+        /** @var string $trace_line */
+        $trace_line = $message->trace['line'];
+
         // Date
         $date = $dateTime->format('Y-m-d H:i:s');
         $line = "{$date} ";
 
         // Line number
-        $line .= "[{$message->trace['line']}] ";
+        $line .= "[{$trace_line}] ";
 
         // Level
         $line .= "{$message->level->value} ";
 
         // Filename
-        $filename = pathinfo($message->trace['file'], PATHINFO_FILENAME);
+        $filename = pathinfo($trace_file, PATHINFO_FILENAME);
         $line .= "- {$filename} - ";
 
         // Context
         if (is_array($message->context) || is_object($message->context)) {
             $line .= json_encode($message->context);
-        } else {
+        }
+
+        if (is_string($message->context) || is_numeric($message->context)) {
             $line .= $message->context;
         }
 
