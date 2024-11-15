@@ -70,12 +70,7 @@ class Loggr implements LoggerInterface
             return $this->parseInterpolation($matches['var'], $context);
         }, $message);
 
-        if ($parsed_message === null) {
-            $this->error = "Error parsing interpolation.";
-            return $message;
-        }
-
-        return $parsed_message;
+        return $parsed_message ?? '';
     }
 
     /**
