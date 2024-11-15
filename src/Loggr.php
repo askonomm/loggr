@@ -50,9 +50,64 @@ class Loggr implements LoggerInterface
         $this->driver->log($this->format->serialize(new Message(
             level: $level,
             trace: $this->trace,
-            content: $message,
+            content: $this->interpolate($message, $context),
             context: $context,
         )));
+    }
+
+    /**
+     * @param string $message
+     * @param mixed|null $context
+     * @return string
+     */
+    private function interpolate(string $message, mixed $context = null): string
+    {
+        // $context has to be present, an array or an object.
+        if (!is_array($context) && !is_object($context)) return $message;
+
+        /** @var string|null $parsed_message */
+        $parsed_message = preg_replace_callback('/{(?<var>.*?)}/', function ($matches) use ($context) {
+            return $this->parseInterpolation($matches['var'], $context);
+        }, $message);
+
+        if ($parsed_message === null) {
+            $this->error = "Error parsing interpolation.";
+            return $message;
+        }
+
+        return $parsed_message;
+    }
+
+    /**
+     * @param string $var
+     * @param mixed|null $context
+     * @return string
+     */
+    private function parseInterpolation(string $var, mixed $context = null): string
+    {
+        $parts = explode('.', $var);
+        $value = $context;
+
+        foreach ($parts as $part) {
+            if (is_array($value) && array_key_exists($part, $value)) {
+                $value = $value[$part];
+                continue;
+            }
+
+            if (is_object($value) && property_exists($value, $part)) {
+                $value = $value->{$part};
+                continue;
+            }
+
+            return '';
+        }
+
+        return match(gettype($value)) {
+            'string' => $value,
+            'integer', 'boolean', 'double' => (string)$value,
+            'NULL' => 'null',
+            default => ''
+        };
     }
 
     /**

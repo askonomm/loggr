@@ -22,11 +22,19 @@ Loggr is very simple to use, and looks like this:
 
 ```php
 $loggr = new Loggr(new FileSystemDriver('path-to-logs'));
-$loggr->info('context');
+$loggr->info('message', ['some-data' => 'goes-here']);
 ```
 
 All you have to do is instantiate Loggr with the appropriate driver for your use case and then simply 
-log away with any data you want to give it. It takes scalar values, as well as arrays and objects.
+log away with any data you want to give it. As per the PSR-3 standard, you can also interpolate context values 
+into the message placeholder, like so:
+
+```php
+$loggr = new Loggr(new FileSystemDriver('path-to-logs'));
+$loggr->info('Hello {who}', ['who' => 'World']);
+```
+
+Which would then output `Hello World` as the message.
 
 ### Methods
 
