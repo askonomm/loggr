@@ -7,12 +7,12 @@ namespace Asko\Loggr;
  */
 enum Level: string
 {
-    case Emergency = "EMERGENCY";
-    case Alert = "ALERT";
-    case Critical = "CRITICAL";
-    case Error = "ERROR";
-    case Warning = "WARNING";
-    case Notice = "NOTICE";
-    case Info = "INFO";
-    case Debug = "DEBUG";
+    case Emergency = "emergency";
+    case Alert = "alert";
+    case Critical = "critical";
+    case Error = "error";
+    case Warning = "warning";
+    case Notice = "notice";
+    case Info = "info";
+    case Debug = "debug";
 }

@@ -96,4 +96,12 @@ class OutputDriverTest extends TestCase
         $loggr = new Loggr(new OutputDriver());
         $loggr->debug('test');
     }
+
+    public function testLog(): void
+    {
+        $date = (new DateTime)->format('Y-m-d H:i:s');
+        $this->expectOutputString("[{$date}] OutputDriverTest.DEBUG: test");
+        $loggr = new Loggr(new OutputDriver());
+        $loggr->log('debug', 'test');
+    }
 }

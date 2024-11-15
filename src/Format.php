@@ -45,7 +45,7 @@ enum Format
 
         $json = json_encode([
             'date' => $dateTime->format('Y-m-d H:i:s'),
-            'level' => $message->level->value,
+            'level' => strtoupper($message->level->value),
             'message' => $message->content,
             'context' => $message->context,
             'trace' => [
@@ -78,7 +78,8 @@ enum Format
 
         // File name and level
         $filename = pathinfo($trace_file, PATHINFO_FILENAME);
-        $line .= "{$filename}.{$message->level->value}: ";
+        $level = strtoupper($message->level->value);
+        $line .= "{$filename}.{$level}: ";
 
         // Message
         if (!empty($message->content) && !empty($message->context)) {
@@ -121,7 +122,8 @@ enum Format
 
         // File name and level
         $filename = pathinfo($trace_file, PATHINFO_FILENAME);
-        $line .= "{$filename}.{$message->level->value}: ";
+        $level = strtoupper($message->level->value);
+        $line .= "{$filename}.{$level}: ";
 
         // Message
         if (!empty($message->content) && !empty($message->context)) {
@@ -167,7 +169,8 @@ enum Format
         $line .= "[{$trace_line}] ";
 
         // Level
-        $line .= "{$message->level->value} ";
+        $level = strtoupper($message->level->value);
+        $line .= "{$level} ";
 
         // Filename
         $filename = pathinfo($trace_file, PATHINFO_FILENAME);
