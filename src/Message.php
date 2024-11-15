@@ -11,6 +11,7 @@ readonly class Message
         public Level $level,
         /** @var array<string, mixed> $trace */
         public array $trace = [],
+        public string $content = '',
         public mixed $context = null,
     ) {}
 }

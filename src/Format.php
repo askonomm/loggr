@@ -46,6 +46,7 @@ enum Format
         $json = json_encode([
             'date' => $dateTime->format('Y-m-d H:i:s'),
             'level' => $message->level->value,
+            'message' => $message->content,
             'context' => $message->context,
             'trace' => [
                 'file' => pathinfo($trace_file, PATHINFO_FILENAME),
@@ -79,6 +80,18 @@ enum Format
         $filename = pathinfo($trace_file, PATHINFO_FILENAME);
         $line .= "{$filename}.{$message->level->value}: ";
 
+        // Message
+        if (!empty($message->content) && !empty($message->context)) {
+            $line .= "{$message->content} - ";
+        }
+
+        if (!empty($message->content) && empty($message->context)) {
+            $line .= "{$message->content}";
+        }
+
+        // Context
+        if (empty($message->context)) return $line;
+
         // Context
         if (is_array($message->context) || is_object($message->context)) {
             $line .= json_encode($message->context);
@@ -110,7 +123,18 @@ enum Format
         $filename = pathinfo($trace_file, PATHINFO_FILENAME);
         $line .= "{$filename}.{$message->level->value}: ";
 
+        // Message
+        if (!empty($message->content) && !empty($message->context)) {
+            $line .= "{$message->content} - ";
+        }
+
+        if (!empty($message->content) && empty($message->context)) {
+            $line .= "{$message->content}";
+        }
+
         // Context
+        if (empty($message->context)) return $line;
+
         if (is_array($message->context) || is_object($message->context)) {
             $line .= json_encode($message->context);
         }
@@ -148,6 +172,18 @@ enum Format
         // Filename
         $filename = pathinfo($trace_file, PATHINFO_FILENAME);
         $line .= "- {$filename} - ";
+
+        // Message
+        if (!empty($message->content) && !empty($message->context)) {
+            $line .= "{$message->content} - ";
+        }
+
+        if (!empty($message->content) && empty($message->context)) {
+            $line .= "{$message->content}";
+        }
+
+        // Context
+        if (empty($message->context)) return $line;
 
         // Context
         if (is_array($message->context) || is_object($message->context)) {

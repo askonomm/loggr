@@ -2,6 +2,8 @@
 
 namespace Asko\Loggr;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * Loggr is an extendable logging utility class brought to you by the frustration of
  * every logging class always having its own unique format, making debugging difficult.
@@ -11,7 +13,7 @@ namespace Asko\Loggr;
  *
  * @author Asko Nõmm <asko@faultd.com>
  */
-class Loggr
+class Loggr implements LoggerInterface
 {
     /** @var array<string, mixed> $trace */
     private array $trace;
@@ -34,10 +36,11 @@ class Loggr
      * Logs a message at a specified level with optional context.
      *
      * @param Level $level The severity level of the log message. Defaults to Level::Info.
+     * @param string $message The log message.
      * @param mixed $context Additional data or context to include with the log message. Optional.
      * @return void
      */
-    private function log(Level $level = Level::Info, mixed $context = null): void
+    private function write(Level $level, string $message, mixed $context = null): void
     {
         if (!$this->driver || !$this->format) {
             $this->error = "Driver or format not set.";
@@ -48,6 +51,7 @@ class Loggr
             $this->driver->log($this->format->serialize(new Message(
                 level: $level,
                 trace: $this->trace,
+                content: $message,
                 context: $context,
             )));
         } catch(\Throwable $e) {
@@ -58,96 +62,110 @@ class Loggr
     /**
      * Logs an emergency level message with optional context.
      *
+     * @param string|\Stringable $message
      * @param mixed $context Additional data or context to include with the emergency message. Optional.
      * @return void
      */
-    public function emergency(mixed $context = null): void
+    public function emergency(string|\Stringable $message, mixed $context = null): void
     {
         $this->trace = debug_backtrace()[0];
-        $this->log(Level::Emergency, $context);
+        $this->write(Level::Emergency, $message, $context);
     }
 
     /**
      * Sends an alert-level log message with optional context.
      *
+     * @param string|\Stringable $message
      * @param mixed $context Additional data or context to include with the log message. Optional.
      * @return void
      */
-    public function alert(mixed $context = null): void
+    public function alert(string|\Stringable $message, mixed $context = null): void
     {
         $this->trace = debug_backtrace()[0];
-        $this->log(Level::Alert, $context);
+        $this->write(Level::Alert, $message, $context);
     }
 
     /**
      * Logs a critical level message with optional context.
      *
+     * @param string|\Stringable $message
      * @param mixed $context Additional data or context to include with the log message. Optional.
      * @return void
      */
-    public function critical( mixed $context = null): void
+    public function critical(string|\Stringable $message, mixed $context = null): void
     {
         $this->trace = debug_backtrace()[0];
-        $this->log(Level::Critical, $context);
+        $this->write(Level::Critical, $message, $context);
     }
 
     /**
      * Logs an error message with optional context.
      *
+     * @param string|\Stringable $message
      * @param mixed $context Additional data or context to include with the error message. Optional.
      * @return void
      */
-    public function error(mixed $context = null): void
+    public function error(string|\Stringable $message, mixed $context = null): void
     {
         $this->trace = debug_backtrace()[0];
-        $this->log(Level::Error, $context);
+        $this->write(Level::Error, $message, $context);
     }
 
     /**
      * Logs a warning message with the specified context.
      *
+     * @param string|\Stringable $message
      * @param mixed $context Optional context information to include in the log.
      * @return void
      */
-    public function warning(mixed $context = null): void
+    public function warning(string|\Stringable $message, mixed $context = null): void
     {
         $this->trace = debug_backtrace()[0];
-        $this->log(Level::Warning, $context);
+        $this->write(Level::Warning, $message, $context);
     }
 
     /**
      * Logs a notice message with the specified context.
      *
+     * @param string|\Stringable $message
      * @param mixed $context Optional context information to include in the log.
      * @return void
      */
-    public function notice(mixed $context = null): void
+    public function notice(string|\Stringable $message, mixed $context = null): void
     {
         $this->trace = debug_backtrace()[0];
-        $this->log(Level::Notice, $context);
+        $this->write(Level::Notice, $message, $context);
     }
 
     /**
      * Logs an informational message with the specified context.
      *
+     * @param string|\Stringable $message
      * @param mixed $context Optional context information to include in the log.
      * @return void
      */
-    public function info(mixed $context = null): void
+    public function info(string|\Stringable $message, mixed $context = null): void
     {
         $this->trace = debug_backtrace()[0];
-        $this->log(Level::Info, $context);
+        $this->write(Level::Info, $message, $context);
     }
 
     /**
      * Logs a debug message with the specified context.
      *
+     * @param string|\Stringable $message
      * @param mixed $context Optional context information to include in the log.
      * @return void
      */
-    public function debug(mixed $context = null): void
+    public function debug(string|\Stringable $message, mixed $context = null): void
     {
         $this->trace = debug_backtrace()[0];
-        $this->log(Level::Debug, $context);
+        $this->write(Level::Debug, $message, $context);
+    }
+
+    public function log($level, \Stringable|string $message, array $context = []): void
+    {
+        $this->trace = debug_backtrace()[0];
+        $this->write(Level::from($level), $message, $context);
     }
 }

@@ -16,13 +16,13 @@ class FormatTest extends MockeryTestCase
         $message = new Message(
             level: Level::Info,
             trace: debug_backtrace()[0],
-            context: ['message' => 'test'],
+            context: ['test' => 'test'],
         );
 
         $format = Format::JSON;
         $serializedMessage = $format->serialize($message);
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
-        $expectedJson = '{"date":"' . $full_date . '","level":"INFO","context":{"message":"test"},"trace":{"file":"TestCase","line":1182}}';
+        $expectedJson = '{"date":"' . $full_date . '","level":"INFO","message":"","context":{"test":"test"},"trace":{"file":"TestCase","line":1182}}';
 
         $this->assertEquals($expectedJson, $serializedMessage);
     }
@@ -32,13 +32,14 @@ class FormatTest extends MockeryTestCase
         $message = new Message(
             level: Level::Info,
             trace: debug_backtrace()[0],
+            content: 'test',
             context: ['message' => 'test'],
         );
 
         $format = Format::IntelliJ;
         $serializedMessage = $format->serialize($message);
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
-        $expected = "{$full_date} [1182] INFO - TestCase - {\"message\":\"test\"}";
+        $expected = "{$full_date} [1182] INFO - TestCase - test - {\"message\":\"test\"}";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -48,7 +49,7 @@ class FormatTest extends MockeryTestCase
         $message = new Message(
             level: Level::Info,
             trace: debug_backtrace()[0],
-            context: "hello world",
+            content: "hello world",
         );
 
         $format = Format::IntelliJ;
@@ -64,13 +65,14 @@ class FormatTest extends MockeryTestCase
         $message = new Message(
             level: Level::Info,
             trace: debug_backtrace()[0],
+            content: 'test',
             context: ['message' => 'test'],
         );
 
         $format = Format::Laravel;
         $serializedMessage = $format->serialize($message);
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
-        $expected = "[{$full_date}] TestCase.INFO: {\"message\":\"test\"}";
+        $expected = "[{$full_date}] TestCase.INFO: test - {\"message\":\"test\"}";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -80,7 +82,7 @@ class FormatTest extends MockeryTestCase
         $message = new Message(
             level: Level::Info,
             trace: debug_backtrace()[0],
-            context: "hello world",
+            content: "hello world",
         );
 
         $format = Format::Laravel;
