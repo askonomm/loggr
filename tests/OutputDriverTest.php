@@ -9,9 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class OutputDriverTest extends TestCase
 {
-    /**
-     * @throws \Exception
-     */
     public function testEmergency(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
@@ -20,9 +17,6 @@ class OutputDriverTest extends TestCase
         $loggr->emergency('test');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testAlert(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
@@ -31,9 +25,6 @@ class OutputDriverTest extends TestCase
         $loggr->alert('test');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testCritical(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
@@ -42,9 +33,6 @@ class OutputDriverTest extends TestCase
         $loggr->critical('test');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testError(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
@@ -53,9 +41,6 @@ class OutputDriverTest extends TestCase
         $loggr->error('test');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testWarning(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
@@ -64,9 +49,6 @@ class OutputDriverTest extends TestCase
         $loggr->warning('test');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testNotice(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
@@ -75,9 +57,6 @@ class OutputDriverTest extends TestCase
         $loggr->notice('test');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testInfo(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
@@ -86,9 +65,6 @@ class OutputDriverTest extends TestCase
         $loggr->info('test');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testDebug(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');

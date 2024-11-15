@@ -8,9 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class LoggrTest extends TestCase
 {
-    /**
-     * @throws \Exception
-     */
     public function testNoDriver(): void
     {
         $loggr = new Loggr();
@@ -18,9 +15,6 @@ class LoggrTest extends TestCase
         $this->assertEquals("Driver or format not set.", $loggr->error);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testNoFormat(): void
     {
         $loggr = new Loggr(new OutputDriver());

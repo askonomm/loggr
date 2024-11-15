@@ -10,9 +10,6 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class FileSystemDriverTest extends MockeryTestCase
 {
-    /**
-     * @throws \Exception
-     */
     public function testEmergency(): void
     {
         $data = '';
@@ -22,9 +19,6 @@ class FileSystemDriverTest extends MockeryTestCase
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.EMERGENCY: test", $data);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testAlert(): void
     {
         $data = '';
@@ -34,9 +28,6 @@ class FileSystemDriverTest extends MockeryTestCase
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.ALERT: test", $data);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testCritical(): void
     {
         $data = '';
@@ -46,9 +37,6 @@ class FileSystemDriverTest extends MockeryTestCase
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.CRITICAL: test", $data);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testError(): void
     {
         $data = '';
@@ -58,9 +46,6 @@ class FileSystemDriverTest extends MockeryTestCase
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.ERROR: test", $data);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testWarning(): void
     {
         $data = '';
@@ -70,9 +55,6 @@ class FileSystemDriverTest extends MockeryTestCase
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.WARNING: test", $data);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testNotice(): void
     {
         $data = '';
@@ -82,9 +64,6 @@ class FileSystemDriverTest extends MockeryTestCase
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.NOTICE: test", $data);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testInfo(): void
     {
         $data = '';
@@ -94,9 +73,6 @@ class FileSystemDriverTest extends MockeryTestCase
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.INFO: test", $data);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testDebug(): void
     {
         $data = '';
@@ -106,9 +82,6 @@ class FileSystemDriverTest extends MockeryTestCase
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.DEBUG: test", $data);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testMultipleEntries(): void
     {
         $data = '';

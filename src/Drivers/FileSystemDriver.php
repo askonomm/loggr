@@ -21,7 +21,6 @@ class FileSystemDriver implements Driver
      *
      * @param string $serializedMessage The message to be logged, serialized as a string.
      * @return void
-     * @throws \RuntimeException If the log file or directory cannot be created, or if the log file is not writable.
      */
     public function log(string $serializedMessage): void
     {

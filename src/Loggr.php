@@ -47,16 +47,12 @@ class Loggr implements LoggerInterface
             return;
         }
 
-        try {
-            $this->driver->log($this->format->serialize(new Message(
-                level: $level,
-                trace: $this->trace,
-                content: $message,
-                context: $context,
-            )));
-        } catch(\Throwable $e) {
-            $this->error = $e->getMessage();
-        }
+        $this->driver->log($this->format->serialize(new Message(
+            level: $level,
+            trace: $this->trace,
+            content: $message,
+            context: $context,
+        )));
     }
 
     /**
@@ -163,7 +159,7 @@ class Loggr implements LoggerInterface
         $this->write(Level::Debug, $message, $context);
     }
 
-    public function log($level, \Stringable|string $message, array $context = []): void
+    public function log(mixed $level, \Stringable|string $message, array $context = []): void
     {
         $this->trace = debug_backtrace()[0];
         $this->write(Level::from($level), $message, $context);
