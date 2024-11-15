@@ -40,7 +40,7 @@ Loggr supports all of these logging methods:
 - `notice(string $message, mixed $context = null)`
 - `info(string $message, mixed $context = null)`
 - `debug(string $message, mixed $context = null)`
-- `log(Level $level, string $message, mixed $context = null)`
+- `log(mixed $level, string $message, mixed $context = null)`
 
 ### Setting log format
 
