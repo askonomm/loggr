@@ -29,27 +29,19 @@ class FileSystemDriver implements Driver
         $file_name = "{$date->format('Y-m-d')}.log";
         $path = $this->directory . DIRECTORY_SEPARATOR . $file_name;
 
-        // If the log file does not exist, try creating one
-        if (!$this->exists($path)) {
-            throw new \RuntimeException('Log file could not be created at path: ' . $path);
-        }
-
-        // We managed to get this far, but still can't write to the log file
-        if (!$this->isWriteable($path)) {
-            throw new \RuntimeException('Log file is not writeable at path: ' . $path);
-        }
-
+        $this->createLogFileIfNotExist($path);
         $this->write($path, $serializedMessage . PHP_EOL);
     }
 
-    public function exists(string $path): bool
+    public function createLogFileIfNotExist(string $path): void
     {
-        return file_exists($path);
-    }
+        if (!file_exists($this->directory)) {
+            mkdir($this->directory, 0600, true);
+        }
 
-    public function isWriteable(string $path): bool
-    {
-        return is_writeable($path);
+        if (is_writable($this->directory)) {
+            touch($path);
+        }
     }
 
     public function write(string $path, string $data): void

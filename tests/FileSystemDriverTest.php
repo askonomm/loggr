@@ -132,35 +132,11 @@ class FileSystemDriverTest extends MockeryTestCase
         $this->assertStringContainsString("[{$full_date}] FileSystemDriverTest.DEBUG: test", $last_line);
     }
 
-    public function testNoPath(): void
-    {
-        $loggr = new Loggr(new FileSystemDriver('path-does-not-exist'));
-        $loggr->emergency('test');
-        $sep = DIRECTORY_SEPARATOR;
-        $date = (new DateTime())->format('Y-m-d');
-        $this->assertEquals("Log file could not be created at path: path-does-not-exist{$sep}{$date}.log", $loggr->error);
-    }
-
-    public function testCantWrite(): void
-    {
-        $driver = Mockery::mock(FileSystemDriver::class, [''])->makePartial();
-        $driver->shouldReceive('log')->passthru();
-        $driver->shouldReceive('exists')->andReturn(true);
-        $driver->shouldReceive('isWriteable')->andReturns(false);
-        $driver->shouldReceive('write')->never();
-        $loggr = new Loggr($driver);
-        $loggr->emergency('test');
-        $sep = DIRECTORY_SEPARATOR;
-        $date = (new DateTime())->format('Y-m-d');
-        $this->assertEquals("Log file is not writeable at path: {$sep}{$date}.log", $loggr->error);
-    }
-
     private function mockLogger(string &$result): Loggr
     {
-        $driver = Mockery::mock(FileSystemDriver::class, [''])->makePartial();
+        $driver = Mockery::mock(FileSystemDriver::class, ['/tmp'])->makePartial();
         $driver->shouldReceive('log')->passthru();
-        $driver->shouldReceive('exists')->andReturn(true);
-        $driver->shouldReceive('isWriteable')->andReturns(true);
+        $driver->shouldReceive('createLogFileIfNotExist')->andReturn(true);
         $driver->shouldReceive('write')->withArgs(function (string $path, string $data) use (&$result) {
             $result .= $data;
 
