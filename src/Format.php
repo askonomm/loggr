@@ -43,7 +43,7 @@ enum Format
         /** @var string $trace_line */
         $trace_line = $message->trace['line'];
 
-        return json_encode([
+        $json = json_encode([
             'date' => $dateTime->format('Y-m-d H:i:s'),
             'level' => strtoupper($message->level->value),
             'message' => $message->content,
@@ -53,6 +53,12 @@ enum Format
                 'line' => $trace_line,
             ],
         ]);
+
+        if (!$json) {
+            return '';
+        }
+
+        return $json;
     }
 
     /**

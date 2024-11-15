@@ -43,6 +43,21 @@ class FormatTest extends MockeryTestCase
         $this->assertEquals($expectedJson, $serializedMessage);
     }
 
+    public function testJsonFails(): void
+    {
+        $message = new Message(
+            level: Level::Info,
+            trace: debug_backtrace()[0],
+            context: NAN,
+        );
+
+        $format = Format::JSON;
+        $serializedMessage = $format->serialize($message);
+        $expectedJson = '';
+
+        $this->assertEquals($expectedJson, $serializedMessage);
+    }
+
     public function testIntelliJ(): void
     {
         $message = new Message(

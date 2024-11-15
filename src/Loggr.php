@@ -159,8 +159,18 @@ class Loggr implements LoggerInterface
         $this->write(Level::Debug, $message, $context);
     }
 
-    public function log(mixed $level, \Stringable|string $message, array $context = []): void
+    /**
+     * Logs a message with the specified level and context.
+     *
+     * @param mixed $level The logging level (e.g., error, info, debug).
+     * @param \Stringable|string $message The message to log.
+     * @param mixed $context Optional context information to include in the log.
+     * @return void
+     */
+    public function log(mixed $level, \Stringable|string $message, mixed $context = null): void
     {
+        if (!is_string($level) && !is_int($level)) return;
+
         $this->trace = debug_backtrace()[0];
         $this->write(Level::from($level), $message, $context);
     }
