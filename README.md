@@ -32,14 +32,15 @@ log away with any data you want to give it. It takes scalar values, as well as a
 
 Loggr supports all of these logging methods:
 
-- `emergency(mixed $context = null)`
-- `alert(mixed $context = null)`
-- `critical( mixed $context = null)`
-- `error(mixed $context = null)`
-- `warning(mixed $context = null)`
-- `notice(mixed $context = null)`
-- `info(mixed $context = null)`
-- `debug(mixed $context = null)`
+- `emergency(string $message, mixed $context = null)`
+- `alert(string $message, mixed $context = null)`
+- `critical(string $message, mixed $context = null)`
+- `error(string $message, mixed $context = null)`
+- `warning(string $message, mixed $context = null)`
+- `notice(string $message, mixed $context = null)`
+- `info(string $message, mixed $context = null)`
+- `debug(string $message, mixed $context = null)`
+- `log(Level $level, string $message, mixed $context = null)`
 
 ### Setting log format
 
