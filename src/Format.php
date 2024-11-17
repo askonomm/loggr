@@ -72,37 +72,13 @@ enum Format
         /** @var string $trace_file */
         $trace_file = $message->trace['file'];
 
-        // Date
-        $date = $dateTime->format('Y-m-d H:i:s');
-        $line = "[$date] ";
-
-        // File name and level
+        $datetime = $dateTime->format('Y-m-d H:i:s');
         $filename = pathinfo($trace_file, PATHINFO_FILENAME);
         $level = strtoupper($message->level->value);
-        $line .= "{$filename}.{$level}: ";
+        $content = !empty($message->content) ? "$message->content " : "";
+        $context =  isset($message->context) ? json_encode($message->context) : '';
 
-        // Message
-        if (!empty($message->content) && !empty($message->context)) {
-            $line .= "{$message->content} - ";
-        }
-
-        if (!empty($message->content) && empty($message->context)) {
-            $line .= "{$message->content}";
-        }
-
-        // Context
-        if (empty($message->context)) return $line;
-
-        // Context
-        if (is_array($message->context) || is_object($message->context)) {
-            $line .= json_encode($message->context);
-        }
-
-        if (is_string($message->context) || is_numeric($message->context)) {
-            $line .= $message->context;
-        }
-
-        return $line;
+        return trim("[$datetime] $filename.$level: $content$context");
     }
 
     /**
@@ -117,35 +93,13 @@ enum Format
         $trace_file = $message->trace['file'];
 
         // Date
-        $date = $dateTime->format('Y-m-d\TH:i:s.uP');
-        $line = "[$date] ";
-
-        // File name and level
+        $datetime = $dateTime->format('Y-m-d\TH:i:s.uP');
         $filename = pathinfo($trace_file, PATHINFO_FILENAME);
         $level = strtoupper($message->level->value);
-        $line .= "{$filename}.{$level}: ";
+        $content = !empty($message->content) ? "$message->content " : "";
+        $context =  isset($message->context) ? json_encode($message->context) : '';
 
-        // Message
-        if (!empty($message->content) && !empty($message->context)) {
-            $line .= "{$message->content} - ";
-        }
-
-        if (!empty($message->content) && empty($message->context)) {
-            $line .= "{$message->content}";
-        }
-
-        // Context
-        if (empty($message->context)) return $line;
-
-        if (is_array($message->context) || is_object($message->context)) {
-            $line .= json_encode($message->context);
-        }
-
-        if (is_string($message->context) || is_numeric($message->context)) {
-            $line .= $message->context;
-        }
-
-        return $line;
+        return trim("[$datetime] $filename.$level: $content$context");
     }
 
     /**
@@ -162,41 +116,12 @@ enum Format
         $trace_line = $message->trace['line'];
 
         // Date
-        $date = $dateTime->format('Y-m-d H:i:s');
-        $line = "{$date} ";
-
-        // Line number
-        $line .= "[{$trace_line}] ";
-
-        // Level
+        $datetime = $dateTime->format('Y-m-d H:i:s');
         $level = strtoupper($message->level->value);
-        $line .= "{$level} ";
-
-        // Filename
         $filename = pathinfo($trace_file, PATHINFO_FILENAME);
-        $line .= "- {$filename} - ";
+        $content = !empty($message->content) ? "$message->content " : "";
+        $context =  isset($message->context) ? json_encode($message->context) : '';
 
-        // Message
-        if (!empty($message->content) && !empty($message->context)) {
-            $line .= "{$message->content} - ";
-        }
-
-        if (!empty($message->content) && empty($message->context)) {
-            $line .= "{$message->content}";
-        }
-
-        // Context
-        if (empty($message->context)) return $line;
-
-        // Context
-        if (is_array($message->context) || is_object($message->context)) {
-            $line .= json_encode($message->context);
-        }
-
-        if (is_string($message->context) || is_numeric($message->context)) {
-            $line .= $message->context;
-        }
-
-        return $line;
+        return trim("$datetime [$trace_line] $level - $filename - $content$context");
     }
 }

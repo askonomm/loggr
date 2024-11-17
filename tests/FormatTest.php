@@ -70,7 +70,7 @@ class FormatTest extends MockeryTestCase
         $format = Format::IntelliJ;
         $serializedMessage = $format->serialize($message);
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
-        $expected = "{$full_date} [1182] INFO - TestCase - test - {\"message\":\"test\"}";
+        $expected = "$full_date [1182] INFO - TestCase - test {\"message\":\"test\"}";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -86,7 +86,7 @@ class FormatTest extends MockeryTestCase
         $format = Format::IntelliJ;
         $serializedMessage = $format->serialize($message);
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
-        $expected = "{$full_date} [1182] INFO - TestCase - hello world";
+        $expected = "$full_date [1182] INFO - TestCase - hello world";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -103,7 +103,7 @@ class FormatTest extends MockeryTestCase
         $format = Format::IntelliJ;
         $serializedMessage = $format->serialize($message);
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
-        $expected = "{$full_date} [1182] INFO - TestCase - hello world - hello world";
+        $expected = "$full_date [1182] INFO - TestCase - hello world \"hello world\"";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -120,7 +120,7 @@ class FormatTest extends MockeryTestCase
         $format = Format::IntelliJ;
         $serializedMessage = $format->serialize($message);
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
-        $expected = "{$full_date} [1182] INFO - TestCase - hello world - 123456789";
+        $expected = "$full_date [1182] INFO - TestCase - hello world 123456789";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -137,7 +137,7 @@ class FormatTest extends MockeryTestCase
         $format = Format::Laravel;
         $serializedMessage = $format->serialize($message);
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
-        $expected = "[{$full_date}] TestCase.INFO: test - {\"message\":\"test\"}";
+        $expected = "[$full_date] TestCase.INFO: test {\"message\":\"test\"}";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -153,7 +153,7 @@ class FormatTest extends MockeryTestCase
         $format = Format::Laravel;
         $serializedMessage = $format->serialize($message);
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
-        $expected = "[{$full_date}] TestCase.INFO: hello world";
+        $expected = "[$full_date] TestCase.INFO: hello world";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -170,7 +170,7 @@ class FormatTest extends MockeryTestCase
         $format = Format::Laravel;
         $serializedMessage = $format->serialize($message);
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
-        $expected = "[{$full_date}] TestCase.INFO: hello world - hello world";
+        $expected = "[$full_date] TestCase.INFO: hello world \"hello world\"";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -187,7 +187,7 @@ class FormatTest extends MockeryTestCase
         $format = Format::Laravel;
         $serializedMessage = $format->serialize($message);
         $full_date = (new DateTime())->format('Y-m-d H:i:s');
-        $expected = "[{$full_date}] TestCase.INFO: hello world - 123456789";
+        $expected = "[$full_date] TestCase.INFO: hello world 123456789";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -226,7 +226,7 @@ class FormatTest extends MockeryTestCase
         $format = Format::Symfony;
         $serializedMessage = $format->serialize($message, $mock_datetime);
         $full_date = $mock_datetime->format('Y-m-d\TH:i:s.uP');
-        $expected = "[$full_date] TestCase.INFO: hello world - hello world";
+        $expected = "[$full_date] TestCase.INFO: hello world \"hello world\"";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -245,7 +245,7 @@ class FormatTest extends MockeryTestCase
         $format = Format::Symfony;
         $serializedMessage = $format->serialize($message, $mock_datetime);
         $full_date = $mock_datetime->format('Y-m-d\TH:i:s.uP');
-        $expected = "[$full_date] TestCase.INFO: ";
+        $expected = "[$full_date] TestCase.INFO: []";
 
         $this->assertEquals($expected, $serializedMessage);
     }
@@ -263,7 +263,7 @@ class FormatTest extends MockeryTestCase
         $format = Format::Symfony;
         $serializedMessage = $format->serialize($message, $mock_datetime);
         $full_date = $mock_datetime->format('Y-m-d\TH:i:s.uP');
-        $expected = "[$full_date] TestCase.INFO: ";
+        $expected = "[$full_date] TestCase.INFO:";
 
         $this->assertEquals($expected, $serializedMessage);
     }
