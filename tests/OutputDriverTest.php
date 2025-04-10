@@ -12,7 +12,7 @@ class OutputDriverTest extends TestCase
     public function testEmergency(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
-        $this->expectOutputString("[$date] OutputDriverTest.EMERGENCY: test");
+        $this->expectOutputString("[$date] OutputDriverTest.EMERGENCY: test" . PHP_EOL);
         $logger = new Loggr(new OutputDriver());
         $logger->emergency('test');
     }
@@ -20,7 +20,7 @@ class OutputDriverTest extends TestCase
     public function testAlert(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
-        $this->expectOutputString("[$date] OutputDriverTest.ALERT: test");
+        $this->expectOutputString("[$date] OutputDriverTest.ALERT: test" . PHP_EOL);
         $logger = new Loggr(new OutputDriver());
         $logger->alert('test');
     }
@@ -28,7 +28,7 @@ class OutputDriverTest extends TestCase
     public function testCritical(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
-        $this->expectOutputString("[$date] OutputDriverTest.CRITICAL: test");
+        $this->expectOutputString("[$date] OutputDriverTest.CRITICAL: test" . PHP_EOL);
         $logger = new Loggr(new OutputDriver());
         $logger->critical('test');
     }
@@ -36,7 +36,7 @@ class OutputDriverTest extends TestCase
     public function testError(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
-        $this->expectOutputString("[$date] OutputDriverTest.ERROR: test");
+        $this->expectOutputString("[$date] OutputDriverTest.ERROR: test" . PHP_EOL);
         $logger = new Loggr(new OutputDriver());
         $logger->error('test');
     }
@@ -44,7 +44,7 @@ class OutputDriverTest extends TestCase
     public function testWarning(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
-        $this->expectOutputString("[$date] OutputDriverTest.WARNING: test");
+        $this->expectOutputString("[$date] OutputDriverTest.WARNING: test" . PHP_EOL);
         $logger = new Loggr(new OutputDriver());
         $logger->warning('test');
     }
@@ -52,7 +52,7 @@ class OutputDriverTest extends TestCase
     public function testNotice(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
-        $this->expectOutputString("[$date] OutputDriverTest.NOTICE: test");
+        $this->expectOutputString("[$date] OutputDriverTest.NOTICE: test" . PHP_EOL);
         $logger = new Loggr(new OutputDriver());
         $logger->notice('test');
     }
@@ -60,7 +60,7 @@ class OutputDriverTest extends TestCase
     public function testInfo(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
-        $this->expectOutputString("[$date] OutputDriverTest.INFO: test");
+        $this->expectOutputString("[$date] OutputDriverTest.INFO: test" . PHP_EOL);
         $logger = new Loggr(new OutputDriver());
         $logger->info('test');
     }
@@ -68,7 +68,7 @@ class OutputDriverTest extends TestCase
     public function testDebug(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
-        $this->expectOutputString("[$date] OutputDriverTest.DEBUG: test");
+        $this->expectOutputString("[$date] OutputDriverTest.DEBUG: test" . PHP_EOL);
         $logger = new Loggr(new OutputDriver());
         $logger->debug('test');
     }
@@ -76,7 +76,7 @@ class OutputDriverTest extends TestCase
     public function testLog(): void
     {
         $date = (new DateTime)->format('Y-m-d H:i:s');
-        $this->expectOutputString("[$date] OutputDriverTest.DEBUG: test");
+        $this->expectOutputString("[$date] OutputDriverTest.DEBUG: test" . PHP_EOL);
         $logger = new Loggr(new OutputDriver());
         $logger->log('debug', 'test');
     }
