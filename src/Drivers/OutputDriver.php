@@ -14,6 +14,6 @@ class OutputDriver implements Driver
      */
     public function log(string $serializedMessage): void
     {
-        file_put_contents('php://output', $serializedMessage);
+        file_put_contents('php://output', $serializedMessage . PHP_EOL);
     }
 }
